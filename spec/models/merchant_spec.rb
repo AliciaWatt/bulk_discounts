@@ -2,7 +2,8 @@ require "rails_helper"
 
 RSpec.describe Merchant, type: :model do
   describe "relationships" do
-    it { should have_many :items }
+    it { should have_many(:items) }
+    it { should have_many(:discounts) }
     it { should have_many(:invoice_items).through(:items) }
     it { should have_many(:invoices).through(:invoice_items) }
     it { should have_many(:customers).through(:invoices) }
@@ -139,7 +140,6 @@ RSpec.describe Merchant, type: :model do
         end
       end
 
-
       describe "#enabled_merchants, #disabled_merchants" do
         it "lists enabled and disabled merchants" do
           merchant1 = FactoryBot.create_list(:merchant, 1, status: 0)[0]
@@ -153,7 +153,6 @@ RSpec.describe Merchant, type: :model do
           expect(Merchant.disabled_merchants).to eq([merchant4, merchant5, merchant6])
         end
       end
-
 
       describe "popular_items" do
         it "returns a list of items ordered by potential_revenue" do
