@@ -1,0 +1,8 @@
+<h1>Discounts</h1>
+
+<% @merchant.discounts.each_with_index do |discount, index| %>
+<div class="discount-<%= index %>">
+  <h3><%= link_to "Discount ID: #{discount.id}" %></h3>
+  <p><%= "#{discount.discount}% discount applied to quanitiy of #{discount.quantity} items." %></p>
+</div>
+<% end %>
