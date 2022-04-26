@@ -1,7 +1,7 @@
-<h1> New Discount for <%= @merchant.name %> </h1>
+<h1> Create New Discount </h1>
 
 <div class="new-discount">
-  <%= form_with url: "/merchants/#{@discount.id}/discounts/new" do |form| %>
+  <%= form_with url: "/merchants/#{@discount.merchant.id}/discounts/new" do |form| %>
     <%= form.label :discount %>
     <%= form.number_field :discount, step: :any %>
     <%= form.label :quantity %>
