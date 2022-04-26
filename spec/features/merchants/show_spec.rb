@@ -138,9 +138,9 @@ RSpec.describe "merchant show page" do
 
   describe "merchant discounts" do
     it "links to a merchants bulk discount index page" do
-      discount_1 = @merchant1.discounts.create!(quantity: 2, discount: 25)
-      discount_2 = @merchant1.discounts.create!(quantity: 4, discount: 75)
-      discount_3 = @merchant2.discounts.create!(quantity: 2, discount: 50)
+      discount_1 = @merchant1.discounts.create!(quantity: 2, discount: 0.25)
+      discount_2 = @merchant1.discounts.create!(quantity: 4, discount: 0.75)
+      discount_3 = @merchant2.discounts.create!(quantity: 2, discount: 0.5)
 
       visit "/merchants/#{@merchant1.id}/dashboard"
 

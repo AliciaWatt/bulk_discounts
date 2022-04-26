@@ -6,9 +6,9 @@ RSpec.describe "merchant discounts index" do
     @merchant2 = Merchant.create!(name: "Merchant Sample")
   end
   it "displays merchants discounts and their information" do
-    discount = @merchant1.discounts.create!(quantity: 2, discount: 25)
-    discount_2 = @merchant1.discounts.create!(quantity: 4, discount: 75)
-    discount_3 = @merchant2.discounts.create!(quantity: 2, discount: 50)
+    discount = @merchant1.discounts.create!(quantity: 2, discount: 0.25)
+    discount_2 = @merchant1.discounts.create!(quantity: 4, discount: 0.75)
+    discount_3 = @merchant2.discounts.create!(quantity: 2, discount: 0.5)
 
     visit "/merchants/#{@merchant1.id}/discounts"
 
@@ -44,9 +44,9 @@ RSpec.describe "merchant discounts index" do
   end
 
   it "can delete a discount" do
-    discount = @merchant1.discounts.create!(quantity: 2, discount: 25)
-    discount_2 = @merchant1.discounts.create!(quantity: 4, discount: 75)
-    discount_3 = @merchant2.discounts.create!(quantity: 2, discount: 50)
+    discount = @merchant1.discounts.create!(quantity: 2, discount: 0.25)
+    discount_2 = @merchant1.discounts.create!(quantity: 4, discount: 0.75)
+    discount_3 = @merchant2.discounts.create!(quantity: 2, discount: 0.5)
 
     visit "/merchants/#{@merchant1.id}/discounts"
 
