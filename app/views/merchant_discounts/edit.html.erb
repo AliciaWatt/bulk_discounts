@@ -1,0 +1,9 @@
+<h1>Edit Discount</h1>
+
+<%= form_with url: "/merchants/#{@discount.merchant.id}/discounts/#{@discount.id}/edit" do |form| %>
+<%= form.label :quantity, "Quantity Threshold" %>
+<%= form.number_field :quantity, in: 1..2000, step: 1, value: @discount.quantity %><br>
+<%= form.label :discount, "Percent Discounted" %>
+<%= form.number_field :discount, in: 1..99, step: 1, value: @discount.discount %><br>
+<%= form.submit "Update Discount" %>
+<% end %>
