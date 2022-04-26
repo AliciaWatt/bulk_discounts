@@ -6,6 +6,8 @@ RSpec.describe Invoice, type: :model do
     it { should have_many(:invoice_items) }
     it { should have_many(:items).through(:invoice_items) }
     it { should have_many(:transactions) }
+    it { should have_many(:merchants).through(:items) }
+    it { should have_many(:discounts).through(:merchants) }
   end
 
   describe "validations" do
@@ -13,7 +15,6 @@ RSpec.describe Invoice, type: :model do
   end
 
   describe "instance methods" do
-
     before :each do
       @merchant1 = Merchant.create!(name: "Schroeder-Jerde")
       @item1 = @merchant1.items.create!(name: "Item Qui Esse", description: "Nihil autem sit odio inventore deleniti. Est lauda...", unit_price: 75107)
@@ -21,21 +22,34 @@ RSpec.describe Invoice, type: :model do
       @item3 = @merchant1.items.create!(name: "Item Ea Voluptatum", description: "Sunt officia eum qui molestiae. Nesciunt quidem cu...", unit_price: 32301)
       @customer1 = Customer.create!(first_name: "Joey", last_name: "Ondricka")
       @invoice1 = Invoice.create!(customer_id: @customer1.id, status: "cancelled")
-      @invoice_item1 = InvoiceItem.create!(item_id: @item1.id, invoice_id: @invoice1.id, quantity: 1, unit_price: 75100, status: "shipped",)
-      @invoice_item2 = InvoiceItem.create!(item_id: @item2.id, invoice_id: @invoice1.id, quantity: 3, unit_price: 200000, status: "packaged",)
+      @invoice_item1 = InvoiceItem.create!(item_id: @item1.id, invoice_id: @invoice1.id, quantity: 1, unit_price: 75100, status: "shipped")
+      @invoice_item2 = InvoiceItem.create!(item_id: @item2.id, invoice_id: @invoice1.id, quantity: 3, unit_price: 200000, status: "packaged")
     end
 
-
-    describe '.total_revenue' do 
-      it 'calculates the total revenue on this invoice' do 
+    describe ".total_revenue" do
+      it "calculates the total revenue on this invoice" do
         expect(@invoice1.total_revenue).to eq(6751.00)
+      end
+    end
+
+    describe ".discounted_revenue" do
+      it "calculates the discounted revenue on this invoice" do
+        merchant3 = FactoryBot.create_list(:merchant, 1)[0]
+        item5 = FactoryBot.create_list(:item, 1, merchant: merchant3)[0]
+        invoice4 = FactoryBot.create_list(:invoice, 1)[0]
+        invoice_item5 = FactoryBot.create_list(:invoice_item, 1, item: item5, invoice: invoice4, unit_price: 1000, quantity: 15)
+        invoice_item5 = FactoryBot.create_list(:invoice_item, 1, item: item5, invoice: invoice4, unit_price: 1000, quantity: 10)
+        invoice_item5 = FactoryBot.create_list(:invoice_item, 1, item: item5, invoice: invoice4, unit_price: 1000, quantity: 8)
+        merchant3.discounts.create!(quantity: 10, discount: 0.1)
+        merchant3.discounts.create!(quantity: 15, discount: 0.2)
+
+        expect(invoice4.discounted_revenue).to eq(290.0)
       end
     end
   end
 
-
   describe "class methods" do
-    describe '#not_completed' do 
+    describe "#not_completed" do
       it "can return all invoices that are incomplete aka 'in progress'" do
         customer_1 = Customer.create!(first_name: "Burt", last_name: "Bacharach")
 
@@ -47,7 +61,6 @@ RSpec.describe Invoice, type: :model do
 
         expect(Invoice.not_completed).to eq([invoice_1, invoice_2])
       end
+    end
   end
- end
 end
-
