@@ -1,5 +1,9 @@
 <h1>Bulk Discount <%= @discount.id %></h1>
 <div class="discount-attributes">
-  <h3> Discount :  <%= @discount.discount %> %</h3>
+  <h3> Discount:  <%= @discount.discount %> %</h3>
   <h3> Quantity Threshold:  <%= @discount.quantity %> </h3>
+</div>
+
+<div class="edit-discount">
+  <h3> <%= link_to "Edit Discount", "/merchants/#{@discount.merchant.id}/discounts/#{@discount.id}/edit", method: :get%> </h3>
 </div>
