@@ -4,21 +4,25 @@ class MerchantDiscountsController < ApplicationController
   end
 
   def show
+    @discount = Discount.find(params[:id])
   end
 
   def new
-    @merchant = Merchant.find(params[:merchant_id])
-    @discount = Discount.create
+    @discount = Discount.new(merchant_id: params[:merchant_id])
+    # @merchant = Merchant.find(params[:merchant_id])
+    # @discount = Discount.create
   end
 
   def create
     merchant = Merchant.find(params[:merchant_id])
-    discount = merchant.discounts.new(discount_params)
-    if discount.save
-      redirect_to "/merchants/#{merchant.id}/discounts"
-    else
-      redirect_to "/merchants/#{merchant.id}/discounts/new", notice: "Discount not created: Required information missing."
-    end
+    merchant.discounts.new(discount_params)
+    redirect_to "/merchants/#{merchant.id}/discounts"
+  end
+
+  def destroy
+    discount = Discount.find(params[:id])
+    discount.destroy
+    redirect_to "/merchants/#{discount.merchant.id}/discounts"
   end
 
   private
