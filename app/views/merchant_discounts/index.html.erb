@@ -1,8 +1,12 @@
 <h1>Discounts</h1>
 
 <% @merchant.discounts.each_with_index do |discount, index| %>
-<div class="discount-<%= index %>">
+<div class="discount-<%= discount.id %>">
   <h3><%= link_to "Discount ID: #{discount.id}" %></h3>
-  <p><%= "#{discount.discount}% discount applied to quanitiy of #{discount.quantity} items." %></p>
+  <p><%= index + 1 %>. <%= "#{discount.discount}% discount applied to quanitiy of #{discount.quantity} items." %></p>
 </div>
 <% end %>
+
+<div class="create-discount">
+  <h3> <%= link_to "Create New Discount", "/merchants/#{@merchant.id}/discounts/new" %> </h3>
+</div>
