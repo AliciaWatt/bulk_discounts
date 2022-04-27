@@ -2,6 +2,7 @@ class InvoiceItem < ApplicationRecord
   belongs_to :invoice
   belongs_to :item
   has_many :discounts, through: :item
+  has_many :merchants, through: :item
 
   validates_presence_of :quantity, :unit_price, :status
   validates :quantity, numericality: true
@@ -10,4 +11,10 @@ class InvoiceItem < ApplicationRecord
   validates :unit_price, numericality: {only_integer: true, greater_than: 0}
 
   enum status: {"packaged" => 0, "pending" => 1, "shipped" => 2}
+
+  def applied_discount
+    discounts.where("quantity >= discounts.quantity")
+      .order(discount: :desc)
+      .first
+  end
 end
