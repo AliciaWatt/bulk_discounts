@@ -3,7 +3,7 @@
 <% @merchant.discounts.each_with_index do |discount, index| %>
 <div class="discount-<%= discount.id %>">
   <h3><%= link_to "Discount ID: #{discount.id}" , "/merchants/#{@merchant.id}/discounts/#{discount.id}"%></h3>
-  <p><%= index + 1 %>. <%="#{discount.discount}% discount applied to quanitiy of #{discount.quantity} items."%></p>
+  <p><%= index + 1 %>. <%=number_to_percentage(discount.discount*100, precision: 0)%><%=" discount applied to the quantity of #{discount.quantity} items."%></p>
   <p> <%= link_to "Delete Discount", "/merchants/#{@merchant.id}/discounts/#{discount.id}", method: :delete %> </p>
 </div>
 <% end %>
@@ -11,3 +11,9 @@
 <div class="create-discount">
   <h3> <%= link_to "Create New Discount", "/merchants/#{@merchant.id}/discounts/new" %> </h3>
 </div>
+
+  <h2> Upcoming Holidays </h2>
+  <%= @facade.holidays[0..2].each do |holiday| %>
+    <h3> <%= holiday.name %> </h3>
+    <p> <%= holiday.format_date %> </p>
+    <% end %>

@@ -14,14 +14,14 @@ RSpec.describe "merchant discounts index" do
 
     within ".discount-#{discount.id}" do
       expect(page).to have_link("Discount ID: #{discount.id}")
-      expect(page).to have_content("#{discount.discount}% discount applied to quanitiy of #{discount.quantity} items.")
+      expect(page).to have_content("25% discount applied to the quantity of #{discount.quantity} items.")
     end
     expect(page).to_not have_link("Discount ID: #{discount_3.id}")
-    expect(page).to_not have_content("#{discount_3.discount}% discount applied to quanitiy of #{discount_3.quantity} items.")
+    expect(page).to_not have_content("50% discount applied to the quantity of #{discount_3.quantity} items.")
 
     within ".discount-#{discount_2.id}" do
       expect(page).to have_link("Discount ID: #{discount_2.id}")
-      expect(page).to have_content("#{discount_2.discount}% discount applied to quanitiy of #{discount_2.quantity} items.")
+      expect(page).to have_content("75% discount applied to the quantity of #{discount_2.quantity} items.")
     end
 
     visit "/merchants/#{@merchant1.id}/discounts"
@@ -52,7 +52,7 @@ RSpec.describe "merchant discounts index" do
 
     within ".discount-#{discount.id}" do
       expect(page).to have_link("Discount ID: #{discount.id}")
-      expect(page).to have_content("#{discount.discount}% discount applied to quanitiy of #{discount.quantity} items.")
+      expect(page).to have_content("25% discount applied to the quantity of #{discount.quantity} items.")
       expect(page).to have_link("Delete Discount")
       click_link "Delete Discount"
     end
@@ -60,6 +60,16 @@ RSpec.describe "merchant discounts index" do
     expect(current_path).to eq("/merchants/#{@merchant1.id}/discounts")
 
     expect(page).to_not have_link("Discount ID: #{discount.id}")
-    expect(page).to_not have_content("#{discount.discount}% discount applied to quanitiy of #{discount.quantity} items.")
+    expect(page).to_not have_content("25% discount applied to the quantity of #{discount.quantity} items.")
+  end
+
+  it "shows the upcoming hoidays and dates" do
+    merchants = FactoryBot.create_list(:merchant, 2)
+
+    visit "/merchants/#{merchants[0].id}/discounts"
+
+    expect(page).to have_content("Memorial Day")
+    expect(page).to have_content("Juneteenth")
+    expect(page).to have_content("Independence Day")
   end
 end

@@ -4,4 +4,7 @@ class ApplicationController < ActionController::Base
   # def repo_info
   #   @github_info = GithubSearch.new.output
   # end
+  def next_3_holidays
+    @holidays = HolidayFacade.find_holidays
+  end
 end
