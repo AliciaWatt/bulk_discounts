@@ -21,7 +21,7 @@ Rails.application.routes.draw do
 
   # get "merchants/:merchant_id/discounts", to: "merchant_discounts#index"
   # get "merchants/:merchant_id/discounts/new", to: "merchant_discounts#new"
-  # post "merchants/:merchant_id/discounts/new", to: "merchant_discounts#create"
+  post "merchants/:merchant_id/discounts/new", to: "merchant_discounts#create"
   post "merchants/:merchant_id/discounts/:id/edit", to: "merchant_discounts#update"
 
   namespace :admin do

@@ -17,7 +17,7 @@ RSpec.describe "merchant discounts edit" do
 
     expect(current_path).to eq("/merchants/#{merchant1.id}/discounts/#{discount1.id}")
 
-    expect(page).to have_content("Discount: 50.0 %")
+    expect(page).to have_content("Discount: 50%")
     expect(page).to have_content("Quantity Threshold: 15")
     expect(page).not_to have_content("Discount: 10")
     expect(page).not_to have_content("Quantity: 5")

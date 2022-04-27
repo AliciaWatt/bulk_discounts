@@ -2,10 +2,10 @@
 
 <div class="new-discount">
   <%= form_with url: "/merchants/#{@discount.merchant.id}/discounts/new" do |form| %>
-    <%= form.label :discount %>
-    <%= form.number_field :discount, step: :any %>
+    <%= form.label :discount, "Discount(0.01-0.99)" %>
+    <%= form.text_field :discount, step: :any %>
     <%= form.label :quantity %>
     <%= form.number_field :quantity %>
-    <%= form.submit%>
+    <%= form.submit 'Submit' %>
   <% end %>
 </div>

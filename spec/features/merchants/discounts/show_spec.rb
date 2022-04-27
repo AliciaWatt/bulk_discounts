@@ -17,7 +17,7 @@ RSpec.describe "the merchant bulk discounts show" do
     visit "/merchants/#{merchant1.id}/discounts/#{discount1.id}"
 
     within ".discount-attributes" do
-      expect(page).to have_content("Discount: 20.0 %")
+      expect(page).to have_content("Discount: 20%")
       expect(page).to have_content("Quantity Threshold: #{discount1.quantity}")
     end
   end
