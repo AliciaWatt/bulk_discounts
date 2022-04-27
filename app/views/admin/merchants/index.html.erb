@@ -1,11 +1,11 @@
 
-<%= link_to "Create New Merchant", "merchants/new" %> 
+<%= link_to "Create New Merchant", "merchants/new" %>
 
 <h2>Top 5 Merchants:</h2>
 <% @merchants.top_5_merchants.each do |merchant|%>
 	<section id = "top_5-<%= merchant.id %>">
-		<p><%= merchant.name %> , 
-			Total Revenue: $<%= '%.02f' %  (merchant.total_revenue.to_f/100) %></p>
+		<p><%= merchant.name %> ,
+			Total Revenue: <%= number_to_currency(merchant.total_revenue, :unit => '$' ) %></p>
 	</section>
 <% end %>
 
@@ -33,5 +33,3 @@
       </div>
       <% end %>
 </section>
-
-
